@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src=""></script>
+</head>
+
+<body>
+
+<div class="box">
+
+
+</div>
+
+<script>
+    /*
+     url
+     data post请求的参数
+     methodType
+     cb
+     timeout 超时时间
+    */
+    function ajax(option) {
+        option = Object.assign({
+            timeout: 5000,
+            type: 'GET'
+        }, option)
+
+        var data = option.data  // {name: 123, age: 5} => 'name=123&age=5'
+
+        var dataStr = ''
+
+        for (var key in data) {
+            dataStr += key + '=' + data[key] + '&'
+        }
+        // 去掉多余的&
+        dataStr = dataStr.substring(0, dataStr.length - 1)
+
+        var xhr = new XMLHttpRequest()
+
+        var timer = setTimeout(function () {
+            xhr.abort()
+        }, option.timeout)
+
+        xhr.onreadystatechange = function () {
+
+            if (xhr.status === 200 && xhr.readyState === 4) {
+
+                clearTimeout(timer)
+
+                // 获取文本数据
+                option.success && option.success(xhr.responseText)
+            }
+        }
+
+
+        xhr.open(option.type, option.url)
+
+        if (option.type === 'POST') {
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        }
+
+        xhr.send(dataStr)
+
+    }
+
+    ajax({
+        type: 'GET',
+        url: 'https://apis.netstart.cn/music/banner',
+        success: function (data) {
+            data = JSON.parse(data)
+            console.log(data.banners);
+
+        }
+    })
+
+    // ajax({
+    //     type: 'POST',
+    //     url: 'http://47.93.52.8:8005/users/signIn',
+    //     data: {
+    //         account: 123,
+    //         password: 123
+    //     },
+    //     success: function (data) {
+    //         data = JSON.parse(data)
+    //         console.log(data);
+    //     }
+    // })
+
+
+</script>
+</body>
+
+</html>

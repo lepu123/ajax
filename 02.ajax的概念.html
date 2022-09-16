@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+        ajax就是前端与后台通讯的技术,其主要功能为:
+        1. 在不要重新加载页面的情况下发送请求给服务器
+        2. 接受并使用从服务器端返回的数据
+        
+        ajax通讯流程
+        1. 通过 XMLHttpRequest 对象创建一个ajax实例
+            var xhr = new XMLHttpRequest
+        2. 初始化当前ajax实例
+           2.1 xhr.open(MethodType,URL,isAsync) 初始化一个网络请求
+                MethodType本次ajax网络请求的请求方式一般 "GET"/"POST" 还有其他方法比较少见,请求方式字符串一定要大写  
+                URL: 完整的资源地址 协议://IP地址:端口号/路由 如果是get请求还会携带请求参数 ?xx=val1&xxx=val2
+                    以百度为例 http://www.baidu.com/s?wd=123 等价于  http://202.108.22.5:80/s?wd=123
+                    我们常见网站都使用了域名访问(隐藏ip地址),并通过反向代理隐藏端口号
+                isAsync: 当前网络请求是否使用异步请求,默认true    
+           
+           2.2 xhr.send(data) 向服务器发送请求
+               data 向服务器发送请求携带的参数(在开发中只有post请求才必须使用send传递参数,get请求的参数直接使用?跟在url地址之后就行了)
+               注意如果要发送post请求,必须设置协议头
+               xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+               xhr.send('type=2')
+
+               1. application/x-www-form-urlencoded
+                浏览器原生form表单默认的提交方式（在不设置enctype的情况下）。此时请求头的格式如下：
+               2. multipart/form-data
+                与application/x-www-form-urlencoded 的区别是她支持文件的传输，并且它的传输数据放在request-payload里，并且以bounday进行分隔。
+               3. application/json
+                发送json字符串
+               4. text/plain 一段普通文本 
+                
+        3. 监听请求的响应状态
+
+            xhr.onreadystatechange = function () {}
+               
+             xhr.readyState 值是一个无符号整型数字,代表请求的状态码
+             0  还未初始化
+             1  与服务器建立链接
+             2  请求已接收
+             3  正在处理中 (交互)
+             4  请求已完成 (注意完成不代表成功)
+            
+             xhr.status === 200 是无符号整型数字,代表请求的响应状态, 404就是Not Found
+
+
+         4. 接收到从服务器返回过来的数据 
+            xhr.responseText 请求发送完毕,返回的文本
+            xhr.responseXML  请求发送完毕,返回的XML数据(不常见)   
+            
+        
+        补充 终止网络请求的方法
+            xhr.abort() 在网络请求没成功之前可以调用此方法终止请求
+        */
+
+        // post 请求尝试
+        let xhr = new XMLHttpRequest()
+
+        xhr.onreadystatechange = function(){
+            if(xhr.status === 200 && xhr.readyState === 4) {
+                // 获取文本数据    
+                let result =  JSON.parse(xhr.responseText)
+                console.log(result);
+            }
+        }
+
+        xhr.open('POST', 'http://47.93.52.8:8005/users/signIn')
+
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+        xhr.send("account=1234567890&password=123")
+
+
+    </script>
+</body>
+
+</html>

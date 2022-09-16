@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.js"></script>
+</head>
+
+<body>
+    <script>
+        // jQuery提供get方法,就是jQuery给使用者提供的封装好的Ajax get请求方法
+        // 语法: $.get(url[,data][,success(data)][,dataType])
+        // url  ajax请求资源地址
+        // data 对象,jquery会将对象自动转换为 key1=val1&key2=val2 形式get请求参数添加url中   
+        // $.get(
+        //     'https://apis.netstart.cn/music/banner',
+        //     { type: 2 },
+        //     function(data) {
+        //         console.log(data);
+        //     },
+        //     // dataType: 预期服务器返回的数据类型 jq自动检测(xml,json,script,html)
+        // )
+
+
+        $.get(
+            'https://apis.netstart.cn/music/banner?type=2',
+            function(data) {
+                console.log(data);
+            },
+            // dataType: 预期服务器返回的数据类型 jq自动检测(xml,json,script,html)
+        )
+
+
+        // 语法: $.post(url[,data][,success(data)][,dataType])
+        // $.post(
+        //     'http://47.93.52.8:8005/users/signIn',
+        //     {
+        //         account: 123456,
+        //         password: 123456
+        //     },
+        //     function (data) {
+        //         console.log(data);
+        //     }
+        // )
+
+    </script>
+</body>
+
+</html>

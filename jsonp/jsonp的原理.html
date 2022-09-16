@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+HTML元素中 script img等等一些标签都支持一个src属性
+src属性作用是让浏览器向src指定url的资源
+
+所以jsonp的原理就是前端开发人员 创建一个支持src属性的标签(一般使用script)，src指向想要访问数据的资源地址
+
+因为数据都是json数据，即使是用script标签拿到了，浏览器以js运行它也会报错
+-->
+
+<script>
+    var script = document.createElement('script')
+
+    script.src = ''
+
+    document.body.appendChild(script)
+
+
+    /*
+
+     */
+</script>
+</body>
+</html>

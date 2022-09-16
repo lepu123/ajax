@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            color: rgb(0, 153, 255);
+        }
+    </style>
+    <script src="./jquery.js"></script>
+</head>
+<body>
+<label for="search"></label>
+    <input type="search" id="search" class="search"><button>搜索</button>
+    <ul>
+        <li>单曲</li>
+        <li>专辑</li> 
+        <li>歌手</li>
+    </ul>
+
+    <script>
+        //1: 单曲, 10: 专辑, 100: 歌手
+        // 'https://apis.netstart.cn/music//cloudsearch?keywords=海阔天空&type=100'
+
+        let $input = $('.search');
+        let $btn = $('button');
+        let $li = $('li')
+
+        let typeObj = {
+            '单曲': 1,
+            '专辑': 10,
+            '歌手': 100
+        }
+        $li.click(function () {
+            $(this).addClass('active').siblings().removeClass('active')
+        })
+
+        $btn.click(function () {
+
+            console.log($input.eq(0).val())
+            // console.log($('.active').text())
+
+            if (!$input.eq(0).val().trim()) {
+                return
+            }
+            let type = typeObj[$('.active').text()]
+            let keyword = 'keywords=' + $input.eq(0).val()
+            let searchUrl = 'https://apis.netstart.cn/music//cloudsearch?' + keyword + '&' + type;
+            $.get(searchUrl, function (data) {
+                console.log(data);
+            })
+        })
+
+
+    </script>
+</body>
+</html>

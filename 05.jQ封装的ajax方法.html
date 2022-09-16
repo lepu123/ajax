@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./jquery.js"></script>
+</head>
+<body>
+
+
+<script>
+
+    // jquery 提供了一个ajax方法，使用者可以对ajax方法传入响应的配置选项
+    // 设置此方法使用 get/post 超时时间 成功失败的回调 content-type 甚至支持jsonp
+    // 语法一: jQuery.ajax({url, option})
+    // 语法二: jQuery.ajax(option)
+
+    /*
+    interface option {
+        // 本次ajax的请求方式
+        type: 'GET/POST'
+        // 请求的资源地址
+        url: ('')
+        // 发送给服务器的内容编码类型
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8'
+        // 向服务器发送的数据
+        data: {},
+        // 请求超时事件
+        timeout: 15000;
+        success: function(data){网络请求成功的回调函数},
+        error: function(err){网络请求失败的回调函数},
+        // 设置额外的请求头
+        headers: {},
+        // jsonp 技术
+        jsonp: '某个jsonp函数名',
+        // jsonp 技术指定的回调函数
+        jsonpCallback: function(){}
+    }
+     */
+
+    $.ajax({
+        type: 'GET',
+        url: 'https://apis.netstart.cn/music/banner',
+        success: function (data) {
+            console.log('网络请求成功', data);
+        },
+        error: function (err) {
+            console.log('网络请求失败', err);
+        }
+    })
+</script>
+</body>
+</html>

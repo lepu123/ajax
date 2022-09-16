@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Ajax 是异步使用 js 和 xml 进行异步通讯的技术,
+            Ajax可以在不刷新页面的情况下请求特定 URL，获取数据。
+            Ajax 只支持 HTTP 以外的协议（包括 file:// 和 FTP），尽管可能受到更多出于安全等原因的限制。
+
+            注意:尽管ajax的x代表xml数据类型,但是由于json有很多优势,在开发中使用json比xml更加普遍
+            (98%使用json数据 只有不到2%使用xml)
+        */
+
+        // 如何去发送ajax请求
+        // 必须要使用 XMLHttpRequest 对象,用于与服务器交互
+        // https://apis.netstart.cn/music/banner?type=0
+
+        // 1. 实例化ajax对象
+        let xhr = new XMLHttpRequest()
+
+        xhr.onreadystatechange = function () {
+            console.log(xhr.readyState)
+            console.log(xhr.status);
+            /*
+             xhr.readyState 值
+             0  还未初始化
+             1  与服务器建立链接
+             2  请求已接收
+             3  正在处理中 (交互)
+             4  请求已完成 (注意完成不代表成功)
+            */
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);// 返回的是字符串json数据
+                // js提供JSON对象,
+                // JSON.parse 可以将json字符串转化为原生对象
+                let result = JSON.parse(xhr.responseText)
+                // JSON.stringify() 可以将原生数据转化为json字符串,
+                console.log(JSON.stringify({ name: 123 }));
+                console.log(result);
+            }
+
+        }
+
+        xhr.open('GET', 'https://apis.netstart.cn/music/banner')
+
+    
+
+
+    </script>
+
+
+</body>
+
+</html>

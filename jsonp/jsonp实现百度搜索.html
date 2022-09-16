@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+<input type="search" id="app" class="search">
+<button>搜索</button>
+
+<script>
+
+
+    var $search = $('#app');
+
+    $search.change(function () {
+        $.ajax({
+            url: 'https://www.baidu.com/sugrec',
+            dataType: 'jsonp',
+            data: {
+                pre: 1,
+                p: 3,
+                ie: 'utf-8',
+                json: 1,
+                prod: 'pc',
+                from: 'pc_web',
+                wd: $search.val().trim(),
+                req: 2,
+                csor: 2,
+                pwd: 1
+            },
+            jsonp: 'cb',
+            jsonpCallback: 'abc',
+            success: function (data) {
+                console.log(data);
+
+            }
+        })
+    })
+
+    function abc(option) {
+        console.log(option)
+        $('ul').remove();
+        $('<ul>').appendTo($('body'))
+        option.g.forEach(function (item, index) {
+            // console.log(item.q, index)
+            $('<li>').text(item.q).appendTo('ul')
+        })
+    }
+
+
+    // app.onchange = function () {
+    //     console.log(this.value)
+    // }
+
+
+    // app.oninput = function () {
+    //     console.log(this.value)
+    // }
+
+
+</script>
+</body>
+</html>

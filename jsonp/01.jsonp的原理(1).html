@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery.js"></script>
+</head>
+
+<body>
+    <!--
+         HTML元素中 script img 等等一些标签都支持一个src属性
+         
+         src属性作用让浏览器请求src指定url路径中获取资源
+
+         所以 jsonp 的原理就是前端开发人员 创建一个支持src属性的标签(一般使用script), src指向想要访问数据的资源地址
+
+         因为数据都是json数组,即使用script标签拿到,浏览器以js运行它也会报错前端人员也没有办法将脚本标签的代码存入自己写的变量
+
+         后端服务器如果要jsonp技术, 当前前端通过jsonp资源地址请求数据时,后端返回的不是json数据而是一段可以执行在浏览器端的js代码
+
+         后端发过来的数据都长这样,结构如下.意思是立即调用函数并将数据作为参数传递给该函数
+         callback({name:'小明',age:'18'})
+
+         前端为了能让后端返回立即调用函数成功执行,就要提前写好立即调用的函数
+
+         这样jsonp就完成了
+
+         注意: src 属性没有同源策略约束,不需要考虑跨域问题. jsonp 绝对不是解决跨域问题的方案.真正解决跨域是后台说了算
+     -->
+    <script>
+        // function callbackHello(data) {
+        //     console.log(data);
+        // }
+
+        // var script = document.createElement('script')
+
+        // script.src = "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=%E6%88%91&req=2&csor=2&pwd=1&cb=callbackHello"
+
+        // document.body.appendChild(script)
+
+        $.ajax({
+            url: 'https://www.baidu.com/sugrec',
+            dataType: 'jsonp', // 表示预期服务器返回的数据类型,在jsonp时一定要设置该值
+            data: {
+                pre: 1,
+                p: 3,
+                ie: 'utf-8',
+                json: 1,
+                prod: 'pc',
+                from: 'pc_web',
+                wd: 'he',
+                req: 2,
+                csor: 2,
+                pwd: 1
+            },
+            jsonp: 'cb',
+            jsonpCallback: 'abc',
+            success: function (data) {
+                console.log(data);
+            }
+        })
+
+
+        $.ajax({
+            url: 'https://r.inews.qq.com/api/ip2city?otype=jsonp&callback=callback&_=16614131429000',
+            dataType:'jsonp',
+            jsonp: 'callback', // 服务器callback的key名
+            // 指定的回调函数名,jq封装后无需用户自己创建对应函数名的回调函数,jq自动创建
+            // jsonpCallback: 'aabc', 
+            // 如果不设置该值,jquery会生成一个随机函数名
+            success:function(data) {
+                console.log(data);
+            }
+        })
+
+       /* 
+        百度搜索建议jsonp 重要参数  cb=函数名  cb对应jquery.Ajax 的  jsonp: 'cb'
+                                  函数名由 jsonpCallback 指定    jsonpCallback:'jQuery1'  
+
+       'https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&cb=jQuery1'
+
+
+       网址上 cb=jQuery1 等价于 $.Ajax({
+                                        jsonp:'cb',
+                                        jsonpCallback:'jQuery1'
+                                    })
+
+
+        腾讯jsonp 重要参数  callback=函数名  callback对应jquery.Ajax 的  jsonp: 'callback' 
+                           函数名由 jsonpCallback 指定    jsonpCallback:'abc' 
+       'https://r.inews.qq.com/api/ip2city?otype=jsonp&callback=abc'
+
+        网址上 callback=abc 等价于 $.Ajax({
+                                        jsonp:'callback', // jsonp 默认值就是callback
+                                        jsonpCallback:'abc' // 该属性不指定随机生成一个名字
+                                    })
+       */
+       
+
+
+
+
+    </script>
+
+</body>
+
+</html>
